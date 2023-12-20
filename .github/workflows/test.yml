@@ -36,7 +36,6 @@ jobs:
           echo "blah blah"
   
       - name: Get Event JSON
-        if: needs.branch_deletion == true
         run: |
           echo "${{ toJson(github.event) }}" > event.json
           echo $PWD
