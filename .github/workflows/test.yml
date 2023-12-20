@@ -45,19 +45,7 @@ jobs:
         run: |
           ref=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo $ref
-          val="$ref"
-          deleted_branch=$(echo "$val" | awk '{print $2}')
-          echo DEL BRANCH : $deleted_branch
-
-          branch1=$(echo "$val" | sed 's/null //')
-          echo $branch1
-
-
-          IFS=' ' read -ra parts <<< "$value"
-
-          branch="${parts[1]}"
-          echo "$branch"
-
+          
       - name: Extract Deleted Branch Name
         id: extract_branch
         run: |
