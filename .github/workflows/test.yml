@@ -35,12 +35,18 @@ jobs:
           echo "blah blah"
       
       - name: Get Event JSON
-        run: echo "${{ toJson(github.event) }}" > event.json
+        run: |
+          echo "${{ toJson(github.event) }}" > event.json
+          echo $PWD
+          echo ls -ltr
+
 
 
       - name: Extract Deleted Branch Name
         id: extract_branch
         run: |
+          echo $PWD
+          echo $ls -ltr
           deleted_branch_name=$(sed -n 's/.*"ref": "\(.*\)".*/\1/p' event.json)
           echo "Deleted branch name: $deleted_branch_name"
           echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
