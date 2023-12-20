@@ -52,5 +52,9 @@ jobs:
 
       - name: Use Deleted Branch Name
         run: |
+          echo "Deleted branch name: ${{ needs.extract_branch.outputs.deleted_branch_name }}"
+
+      - name: Use Deleted Branch Name
+        run: |
           echo "Deleted branch name from environment: $deleted_branch_name"
           # Add your further steps using $deleted_branch_name
