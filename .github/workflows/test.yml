@@ -41,13 +41,12 @@ jobs:
           echo $(ls -ltr)
 
  
-      - name: Display Event Json
+      - name: Display Deleted Branch
         run: |
           ref=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
-          branch=$(echo "$ref" | awk '{print $2}')
-          echo "$branch"
-
-          cat event.json
+          echo $ref
+          deleted_branch=$(echo "$ref" | awk '{print $2}')
+          echo $deleted_branch
 
       - name: Extract Deleted Branch Name
         id: extract_branch
