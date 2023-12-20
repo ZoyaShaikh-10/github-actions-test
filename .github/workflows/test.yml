@@ -43,7 +43,7 @@ jobs:
  
       - name: Display Event Json
         run: |
-          echo $(cat event.json | grep -o '"ref:": "[^"]*' | cut -d'"' -f4)
+          ref=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo REF : $ref
 
           cat event.json
