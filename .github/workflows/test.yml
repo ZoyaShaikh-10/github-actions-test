@@ -1,13 +1,37 @@
-name: testing-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
-jobs:
-  check-bats-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: npm install -g bats
-      - run: bats -v
+name: Deploy Service on New Feature Branch
+
+on:
+  create:
+    branches:
+      - 'feature/*'
+  delete:
+    branches:
+      - 'feature/*'
+
+
+
+
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    # Add steps to install dependencies, build, and deploy your service
+    
+    - name: Deploy Service
+      run: |
+        echo hello
+        echo github.event_name
+        # Add your deployment commands here
+        # Example: docker-compose up -d
+
+    - name: Cleanup Service on Branch Deletion
+      if: github.event_name == 'delete'
+      run: |
+        echo test1
+        # Add your cleanup commands here
+        # Example: docker-compose down
