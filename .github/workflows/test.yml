@@ -11,7 +11,8 @@ on:
 jobs:
   check_branch:
     runs-on: ubuntu-latest
-
+    env: 
+      DELETED_BRANCH: false 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,7 +33,7 @@ jobs:
         id: branch_deletion
         if: github.event_name == 'delete'
         run: |
-          echo "DELETED_BRANCH=false" >> $GITHUB_ENV
+          DELETED_BRANCH=true
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
   
