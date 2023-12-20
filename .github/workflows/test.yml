@@ -29,22 +29,21 @@ jobs:
           # Your specific steps for branches other than 'main'
 
       - name: Run on branch deletion
+        id: branch_deletion
         if: github.event_name == 'delete'
         run: |
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
-
-  cleanup:
-    needs: run_on_branch_deletion
-    runs-on: ubuntu-latest
-    steps:  
+  
       - name: Get Event JSON
+        if: needs.branch_deletion == true
         run: |
           echo "${{ toJson(github.event) }}" > event.json
           echo $PWD
           echo $(ls -ltr)
           
       - name: Extract Deleted Branch Name
+        if: needs.branch_deletion == true
         id: extract_branch
         run: |
           echo $PWD
@@ -55,10 +54,12 @@ jobs:
           echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
       - name: Use Deleted Branch Name
+        if: needs.branch_deletion == true
         run: |
           echo "Deleted branch name: ${{ needs.extract_branch.outputs.deleted_branch_name }}"
 
       - name: Use Deleted Branch Name
+        if: needs.branch_deletion == true
         run: |
           echo "Deleted branch name from environment: $deleted_branch_name"
           echo hello
