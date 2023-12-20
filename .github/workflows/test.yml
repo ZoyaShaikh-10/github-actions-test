@@ -44,7 +44,8 @@ jobs:
       - name: Display Event Json
         run: |
           ref=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
-          echo REF : $ref
+          branch=$(echo "$ref" | awk '{print $2}')
+          echo "$branch"
 
           cat event.json
 
