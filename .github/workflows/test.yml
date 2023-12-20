@@ -36,8 +36,8 @@ jobs:
 
   cleanup:
     needs: run_on_branch_deletion
-      runs-on: ubuntu-latest
-        steps:
+    runs-on: ubuntu-latest
+      steps:
         
         - name: Get Event JSON
           run: |
