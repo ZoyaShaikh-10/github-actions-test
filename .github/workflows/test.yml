@@ -49,6 +49,9 @@ jobs:
           deleted_branch=$(echo "$val" | awk '{print $2}')
           echo DEL BRANCH : $deleted_branch
 
+          branch=$(echo "$val" | sed 's/null //')
+          echo $branch
+
       - name: Extract Deleted Branch Name
         id: extract_branch
         run: |
