@@ -42,7 +42,7 @@ jobs:
           echo $(ls -ltr)
           
       - name: Extract Deleted Branch Name
-        if: needs.branch_deletion == true
+        if: needs.branch_deletion == 'true'
         id: extract_branch
         run: |
           echo $PWD
@@ -53,12 +53,12 @@ jobs:
           echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
       - name: Use Deleted Branch Name
-        if: needs.branch_deletion == true
+        if: needs.branch_deletion == 'true'
         run: |
           echo "Deleted branch name: ${{ needs.extract_branch.outputs.deleted_branch_name }}"
 
       - name: Use Deleted Branch Name
-        if: needs.branch_deletion == true
+        if: needs.branch_deletion == 'true'
         run: |
           echo "Deleted branch name from environment: $deleted_branch_name"
           echo hello
