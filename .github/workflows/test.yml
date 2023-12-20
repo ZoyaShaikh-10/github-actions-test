@@ -39,12 +39,6 @@ jobs:
           echo "${{ toJson(github.event) }}" > event.json
           echo $PWD
           echo $(ls -ltr)
-
- 
-      - name: Display Deleted Branch
-        run: |
-          ref=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
-          echo $ref
           
       - name: Extract Deleted Branch Name
         id: extract_branch
@@ -52,7 +46,7 @@ jobs:
           echo $PWD
           echo $(ls -ltr)
           echo hello
-          deleted_branch_name=$(sed -n 's/.*"ref": "\(.*\)".*/\1/p' event.json)
+          deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo "Deleted branch name: $deleted_branch_name"
           echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
