@@ -34,8 +34,8 @@ jobs:
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
 
-    extract_deleted_branch_name:
-      needs: run_on_branch_deletion
+  cleanup:
+    needs: run_on_branch_deletion
       runs-on: ubuntu-latest
         steps:
         
