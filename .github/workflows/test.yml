@@ -33,10 +33,11 @@ jobs:
         id: branch_deletion
         if: github.event_name == 'delete'
         run: |
+          echo "DELETED_BRANCH=true" >> $GITHUB_ENV
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
-          DELETED_BRANCH=true
-
+          echo $DELETED_BRANCH
+          
   
       - name: Get Event JSON
         run: |
