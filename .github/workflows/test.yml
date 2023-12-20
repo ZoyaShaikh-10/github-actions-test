@@ -32,7 +32,7 @@ jobs:
         id: branch_deletion
         if: github.event_name == 'delete'
         run: |
-          echo "deleted_branch=true" >> $GITHUB_ENV
+          echo "DELETED_BRANCH=false" >> $GITHUB_ENV
           echo "Branch deleted. Running specific steps for branch deletion."
           echo "blah blah"
   
@@ -41,6 +41,8 @@ jobs:
           echo "1: ${{ steps.branch_deletion.outputs.branch_deletion }}"
           echo "2 : ${{ steps.branch_deletion.outputs }}"
           echo "2 : ${{ steps.branch_deletion }}"
+          echo $DELETED_BRANCH
+
           echo ${{ steps.branch_deletion.outputs.deleted_branch}}
           echo "${{ toJson(github.event) }}" > event.json
           echo $PWD
