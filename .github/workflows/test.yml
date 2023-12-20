@@ -37,8 +37,9 @@ jobs:
   
       - name: Get Event JSON
         run: |
-          echo "1: ${{steps.branch_deletion.outputs.branch_deletion }}"
-          echo "2 : ${{steps.branch_deletion.outputs }}"
+          echo "1: ${{ steps.branch_deletion.outputs.branch_deletion }}"
+          echo "2 : ${{ steps.branch_deletion.outputs }}"
+          echo "2 : ${{ steps.branch_deletion }}"
           echo "${{ toJson(github.event) }}" > event.json
           echo $PWD
           echo $(ls -ltr)
