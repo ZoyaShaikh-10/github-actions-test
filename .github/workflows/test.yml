@@ -45,6 +45,8 @@ jobs:
         run: |
           cat event.json
           echo $(sed -n 's/.*"ref": "\(.*\)".*/\1/p' event.json)
+          ref=$(sed -n 's/.*"ref": "\(.*\)".*/\1/p' event.json)
+          echo REF : $ref
 
       - name: Extract Deleted Branch Name
         id: extract_branch
