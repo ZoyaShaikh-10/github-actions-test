@@ -43,8 +43,10 @@ jobs:
  
       - name: Display Event Json
         run: |
-          ref=$(cat event.json | grep -o '"ref:": "[^"]*' | cut -d'"' -f4)
+          echo $(cat event.json | grep -o '"ref:": "[^"]*' | cut -d'"' -f4)
           echo REF : $ref
+
+          cat event.json
 
       - name: Extract Deleted Branch Name
         id: extract_branch
