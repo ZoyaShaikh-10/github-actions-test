@@ -56,10 +56,6 @@ jobs:
           IFS=' ' read -ra parts <<< "$value"
 
           branch="${parts[1]}"
-
-          branch="${branch#"${branch%%[![:space:]]*}"}"
-          branch="${branch%"${branch##*[![:space:]]}"}"
-
           echo "$branch"
 
       - name: Extract Deleted Branch Name
