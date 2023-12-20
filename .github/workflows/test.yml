@@ -1,37 +1,51 @@
-name: Deploy Service on New Feature Branch
+name: Conditional Workflow
 
 on:
-  create:
+  push:
     branches:
-      - 'feature/*'
+      - '*'
   delete:
     branches:
-      - 'feature/*'
+      - '*'
 
+jobs:
+  check_branch:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Run if branch is 'main'
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          echo "This code will run only if the branch is 'main'"
+          # Your specific steps for the 'main' branch
 
-  steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Run if branch is not 'main'
+        if: ${{ github.ref != 'refs/heads/main' }}
+        run: |
+          echo "This code will run for branches other than 'main'"
+          # Your specific steps for branches other than 'main'
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
+      - name: Run on branch deletion
+        if: github.event_name == 'delete'
+        run: |
+          echo "Branch deleted. Running specific steps for branch deletion."
+          echo "blah blah"
+          echo "Branch name is ${GITHUB_REF#refs/heads/}"
+          # Your specific steps for branch deletion
+      - name: Get Event JSON
+        run: echo "${{ toJson(github.event) }}" > event.json
 
-    # Add steps to install dependencies, build, and deploy your service
-    
-    - name: Deploy Service
-      run: |
-        echo hello
-        echo github.event_name
-        # Add your deployment commands here
-        # Example: docker-compose up -d
+      - name: Extract Deleted Branch Name
+        id: extract_branch
+        run: |
+          deleted_branch_name=$(jq -r '.ref' event.json | sed 's|refs/heads/||')
+          echo "Deleted branch name: $deleted_branch_name"
+          echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
 
-    - name: Cleanup Service on Branch Deletion
-      if: github.event_name == 'delete'
-      run: |
-        echo test1
-        # Add your cleanup commands here
-        # Example: docker-compose down
+      - name: Use Deleted Branch Name
+        run: |
+          echo "Deleted branch name from environment: $deleted_branch_name"
+          # Add your further steps using $deleted_branch_name
