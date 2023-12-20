@@ -62,7 +62,7 @@ jobs:
       - name: Use Deleted Branch Name
         if: env.DELETED_BRANCH == 'true'
         run: |
-          echo "Deleted branch name: env.deleted_branch_name"
+          echo "Deleted branch name: $deleted_branch_name"
 
       - name: Use Deleted Branch Name
         if: env.DELETED_BRANCH == 'true'
