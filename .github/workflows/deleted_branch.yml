@@ -1,7 +1,7 @@
 name: Delete Service from deleted branch
 
 on:
-  push:
+  delete:
     branches:
       - '*'
   # delete:
