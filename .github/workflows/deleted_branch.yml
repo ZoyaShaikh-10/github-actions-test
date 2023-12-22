@@ -9,8 +9,10 @@ on:
       - '*'
 
 jobs:
+  
   deleted_branch:
     runs-on: ubuntu-latest
+    if: github.event_name == 'delete'
     env: 
       DELETED_BRANCH: false 
     steps:
