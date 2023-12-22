@@ -11,7 +11,7 @@ on:
 jobs:
   check_branch:
     runs-on: ubuntu-latest
-    if: github.event_name != 'delete'
+    if: github.event_name != 'delete' || github.event_name != 'create'
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

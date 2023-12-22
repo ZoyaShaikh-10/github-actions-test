@@ -1,35 +1,49 @@
-name: Create Branch
+name: Create Service from newly created branch
 
 on:
-  workflow_run:
-    workflows: ["Your Triggering Workflow"]
-    types:
-      - completed
+  push:
+    branches:
+      - '*'
+  # delete:
+  #   branches:
+  #     - '*'
 
 jobs:
-  create_branch:
+  
+  create_service:
     runs-on: ubuntu-latest
-
+    if: github.event_name == 'create'
+    env: 
+      CREATED_BRANCH: false 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        - name: Run on branch creation
+          id: branch_creation
+          run: |
+            echo "CREATED_BRANCH=true" >> $GITHUB_ENV
+            echo "Branch created. Running specific steps for branch creation."
+            echo "blah blah"
 
-      - name: Create Branch
-        run: |
-          # Set your GitHub token
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-          
-          # Set the new branch name
-          NEW_BRANCH_NAME="ZS-test"
+        - name: Get Event JSON
+          run: |
+            echo $CREATED_BRANCH
 
-          # Create the branch using GitHub API
-          curl -X POST \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs \
-            -d @- <<EOF
-          {
-            "ref": "refs/heads/$NEW_BRANCH_NAME",
-            "sha": "$(git rev-parse HEAD)"
-          }
-          EOF
+            echo ${{ steps.branch_creation.outputs.CREATED_BRANCH}}
+            echo "${{ toJson(github.event) }}" > event.json
+      
+        - name: Extract Created Branch Name
+          if: env.CREATED_BRANCH == 'true'
+          id: extract_branch
+          run: |
+            created_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
+            echo "Created branch name: $created_branch_name"
+            echo "created_branch_name=$created_branch_name" >> $GITHUB_ENV
+  
+        - name: Use Created Branch Name
+          if: env.CREATED_BRANCH == 'true'
+          run: |
+            echo "Created branch name: $created_branch_name"
+  
+        - name: Use Created Branch Name
+          if: env.CREATED_BRANCH == 'true'
+          run: |
+            echo "Created branch name from environment: $created_branch_name"

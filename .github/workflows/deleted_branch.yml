@@ -1,4 +1,4 @@
-name: Deleted Branch
+name: Delete Service from deleted branch
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   
-  deleted_branch:
+  deleted_service:
     runs-on: ubuntu-latest
     if: github.event_name == 'delete'
     env: 
@@ -28,7 +28,7 @@ jobs:
           run: |
             echo $DELETED_BRANCH
 
-            echo ${{ steps.branch_deletion.outputs.deleted_branch}}
+            echo ${{ steps.branch_deletion.outputs.deleted_service}}
             echo "${{ toJson(github.event) }}" > event.json
       
         - name: Extract Deleted Branch Name
