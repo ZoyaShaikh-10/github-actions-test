@@ -1,19 +1,17 @@
-name: Conditional Workflow
+name: Check Branch
 
 on:
   push:
     branches:
       - '*'
-  delete:
-    branches:
-      - '*'
+  # delete:
+  #   branches:
+  #     - '*'
 
 jobs:
   check_branch:
     runs-on: ubuntu-latest
     if: github.event_name != 'delete'
-    env: 
-      DELETED_BRANCH: false 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

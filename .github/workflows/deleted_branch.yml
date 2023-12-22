@@ -1,12 +1,12 @@
-name: Conditional Workflow
+name: Deleted Branch
 
 on:
   push:
     branches:
       - '*'
-  delete:
-    branches:
-      - '*'
+  # delete:
+  #   branches:
+  #     - '*'
 
 jobs:
   
