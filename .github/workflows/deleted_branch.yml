@@ -15,6 +15,7 @@ jobs:
 
       - name: Set deleted branch variable
         run: |
+          echo "${{ toJson(github.event) }}" > event.json
           branch=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
           echo "DELETED_BRANCH=$branch" >> $GITHUB_ENV
 
@@ -44,53 +45,53 @@ jobs:
 
 
 
-name: Delete Service from deleted branch
+# name: Delete Service from deleted branch
 
-on:
-  delete:
-    branches:
-      - 'feature*'
-  # delete:
-  #   branches:
-  #     - '*'
+# on:
+#   delete:
+#     branches:
+#       - 'feature*'
+#   # delete:
+#   #   branches:
+#   #     - '*'
 
-jobs:
+# jobs:
   
-  deleted_service:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'delete'
-    env: 
-      DELETED_BRANCH: $(echo "${{ toJson(github.event) }}" | sed -n 's/.*"ref":"refs\/heads\/\([^"]*\)".*/\1/p')
+#   deleted_service:
+#     runs-on: ubuntu-latest
+#     if: github.event_name == 'delete'
+#     env: 
+#       DELETED_BRANCH: $(echo "${{ toJson(github.event) }}" | sed -n 's/.*"ref":"refs\/heads\/\([^"]*\)".*/\1/p')
  
-    steps:
-        - name: Run on branch deletion
-          id: branch_deletion
-          if: github.event_name == 'delete'
-          run: |
-            echo ${{ github.ref }}
-            echo "Branch deleted. Running specific steps for branch deletion."
-            echo "blah blah"
-            json=${{ toJson(github.event) }}
-            echo $json
+#     steps:
+#         - name: Run on branch deletion
+#           id: branch_deletion
+#           if: github.event_name == 'delete'
+#           run: |
+#             echo ${{ github.ref }}
+#             echo "Branch deleted. Running specific steps for branch deletion."
+#             echo "blah blah"
+#             json=${{ toJson(github.event) }}
+#             echo $json
 
-            deleted_branch_name1=$(sed -n 's/.*ref: \(.*\),/\1/p' $json)
-            echo "NAME: $deleted_branch_name1"
+#             deleted_branch_name1=$(sed -n 's/.*ref: \(.*\),/\1/p' $json)
+#             echo "NAME: $deleted_branch_name1"
 
-        - name: Get Event JSON
-          run: |
-            echo "${{ toJson(github.event) }}" > event.json
+#         - name: Get Event JSON
+#           run: |
+            
       
-        - name: Extract Deleted Branch Name
-          id: extract_branch
-          run: |
-            deleted_branch_name=
-            echo "Deleted branch name: $deleted_branch_name"
-            echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
+#         - name: Extract Deleted Branch Name
+#           id: extract_branch
+#           run: |
+#             deleted_branch_name=
+#             echo "Deleted branch name: $deleted_branch_name"
+#             echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
   
-        - name: Use Deleted Branch Name
-          run: |
-            echo "Deleted branch name: $deleted_branch_name"
+#         - name: Use Deleted Branch Name
+#           run: |
+#             echo "Deleted branch name: $deleted_branch_name"
   
-        - name: Use Deleted Branch Name
-          run: |
-            echo "Deleted branch name from environment: $deleted_branch_name"
+#         - name: Use Deleted Branch Name
+#           run: |
+#             echo "Deleted branch name from environment: $deleted_branch_name"
