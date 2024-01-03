@@ -1,3 +1,49 @@
+name: deleted_service
+
+on:
+  delete:
+    branches:
+      - '*'
+
+jobs:
+  check_deleted_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set deleted branch variable
+        run: |
+          branch=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
+          echo "DELETED_BRANCH=$branch" >> $GITHUB_ENV
+
+      - name: Check if the deleted branch is a feature branch
+        run: |
+          if [[ "$DELETED_BRANCH" == 'feature/'* ]]; then
+            echo "This is a feature branch."
+          else
+            echo "This is not a feature branch. Exiting the job."
+            exit 78  # Exiting with a neutral status code (78) to indicate skipping the job
+          fi
+
+      - name: Your main job steps
+        run: |
+          # Add your main job steps here for feature branches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 name: Delete Service from deleted branch
 
 on:
@@ -32,13 +78,12 @@ jobs:
 
         - name: Get Event JSON
           run: |
-            echo $DELETED_BRANCH
             echo "${{ toJson(github.event) }}" > event.json
       
         - name: Extract Deleted Branch Name
           id: extract_branch
           run: |
-            deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
+            deleted_branch_name=
             echo "Deleted branch name: $deleted_branch_name"
             echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
   
