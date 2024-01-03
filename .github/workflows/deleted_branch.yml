@@ -8,7 +8,7 @@ on:
 jobs:
   check_deleted_branch:
     runs-on: ubuntu-latest
-    if: ${{github.event.ref}} == 'feature'*
+    if: startsWith(github.event.ref, 'feature')
     steps:
       - name: Set deleted branch variable
         run: |
