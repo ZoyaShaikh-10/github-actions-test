@@ -3,7 +3,7 @@ name: Delete Service from deleted branch
 on:
   delete:
     branches:
-      - '*'
+      - 'feature*'
   # delete:
   #   branches:
   #     - '*'

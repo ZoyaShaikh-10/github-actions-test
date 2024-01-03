@@ -1,9 +1,9 @@
 name: Create Service from newly created branch
 
 on:
-    create:
+    push:
         branches:
-            - '*'
+            - 'feature*'
 
 jobs:
   
