@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'delete'
     env: 
-      DELETED_BRANCH: false 
+      DELETED_BRANCH: $(echo "${{ toJson(github.event) }}" | sed -n 's/.*"ref":"refs\/heads\/\([^"]*\)".*/\1/p')
+ 
     steps:
         - name: Run on branch deletion
           id: branch_deletion
           if: github.event_name == 'delete'
           run: |
             echo ${{ github.ref }}
-            echo "DELETED_BRANCH=true" >> $GITHUB_ENV
             echo "Branch deleted. Running specific steps for branch deletion."
             echo "blah blah"
 
