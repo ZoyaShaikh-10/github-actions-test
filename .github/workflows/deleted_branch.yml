@@ -1,9 +1,8 @@
 name: deleted_service
 
 on:
-  delete:
-    branches:
-      - '*'
+  delete
+    
 
 jobs:
   check_deleted_branch:
