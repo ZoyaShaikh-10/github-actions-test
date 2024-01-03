@@ -37,7 +37,7 @@ jobs:
         - name: Extract Deleted Branch Name
           id: extract_branch
           run: |
-          deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
+            deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
             echo "Deleted branch name: $deleted_branch_name"
             echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
   
