@@ -3,7 +3,7 @@ name: Create Service from newly created branch
 on:
     create:
         branches:
-            - '*'
+            - 'feature*'
 
 jobs:
   
