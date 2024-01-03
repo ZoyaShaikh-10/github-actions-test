@@ -16,6 +16,7 @@ jobs:
         - name: Run on branch creation
           id: branch_creation
           run: |
+            echo ${{ github.ref }}
             echo "CREATED_BRANCH=true" >> $GITHUB_ENV
             echo "Branch created. Running specific steps for branch creation."
             echo "blah blah"
