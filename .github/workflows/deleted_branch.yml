@@ -24,7 +24,9 @@ jobs:
             echo ${{ github.ref }}
             echo "Branch deleted. Running specific steps for branch deletion."
             echo "blah blah"
-
+            echo "${{ toJson(github.event) }}" 
+            deleted_branch_name1=$(sed -n 's/.*ref: \(.*\),/\1/p' ${{ toJson(github.event) }})
+            echo "NAME: deleted_branch_name1"
         - name: Get Event JSON
           run: |
             echo $DELETED_BRANCH
@@ -35,7 +37,7 @@ jobs:
         - name: Extract Deleted Branch Name
           id: extract_branch
           run: |
-            deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
+          deleted_branch_name=$(sed -n 's/.*ref: \(.*\),/\1/p' event.json)
             echo "Deleted branch name: $deleted_branch_name"
             echo "deleted_branch_name=$deleted_branch_name" >> $GITHUB_ENV
   
