@@ -26,12 +26,11 @@ jobs:
             echo "blah blah"
             echo "${{ toJson(github.event) }}" 
             deleted_branch_name1=$(sed -n 's/.*ref: \(.*\),/\1/p' ${{ toJson(github.event) }})
-            echo "NAME: deleted_branch_name1"
+            echo "NAME: $deleted_branch_name1"
+
         - name: Get Event JSON
           run: |
             echo $DELETED_BRANCH
-
-            echo ${{ steps.branch_deletion.outputs.deleted_service}}
             echo "${{ toJson(github.event) }}" > event.json
       
         - name: Extract Deleted Branch Name
